@@ -1,24 +1,43 @@
 <script>
-  export let name;
+  let text = `s 100 100 100 100`;
+
+  function sendCommand() {
+    console.log(text);
+
+    fetch("http://192.168.86.22/post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain",
+      },
+      body: text,
+    })
+      .then(function (response) {
+        console.log(response);
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+      });
+  }
 </script>
 
 <main>
   <h1>Motors</h1>
   <div class="buttons-grid">
     <p>Base</p>
-    <button> anti-clockwise </button>
+    <button> anti </button>
     <button> clockwise </button>
 
     <p>Shoulder</p>
-    <button> anti-clockwise </button>
+    <button> anti </button>
     <button> clockwise </button>
 
     <p>Elbow</p>
-    <button> anti-clockwise </button>
+    <button> anti </button>
     <button> clockwise </button>
 
     <p>Wrist</p>
-    <button> anti-clockwise </button>
+    <button> anti </button>
     <button> clockwise </button>
   </div>
 
@@ -59,8 +78,9 @@
       rows="10"
       cols="40"
       placeholder="Your wish is my command"
+      bind:value={text}
     />
-    <button class="send">Send</button>
+    <button class="send" on:click={sendCommand}>Send</button>
   </div>
 </main>
 
