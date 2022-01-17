@@ -1,11 +1,34 @@
 # robot-arm
 
-API notes
-s = step control absolute
-a = angle
-g = x,z degree
+## API notes
 
-s 0 0 0 0
-base shoulder elbow wrist
+### key
 
-+- integer
+B := base
+S := shoulder
+E := elbow
+w := wrist
+
+s := step control absolute
+s B S E W
+
+a := angle
+a B S E W
+
+g := ???
+s ? ? ?
+
+### not implemented yet
+
+stepper_relative B S E W
+axis_relative Z X Y
+
+### future
+
+degrees_relative
+home
+send current position
+activate servo
+angle forearm
+
+long and short form eg stepper_relative == SR
