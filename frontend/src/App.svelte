@@ -22,50 +22,114 @@
   <h1>Motors</h1>
   <div class="buttons-grid">
     <p>Base</p>
-    <button> anti </button>
-    <button> clockwise </button>
+    <button
+      on:click={() => sendCommand("stepper_relative -" + step + " 0 0 0")}
+    >
+      anti
+    </button>
+    <button
+      on:click={() => sendCommand("stepper_relative " + step + "  0 0 0")}
+    >
+      clockwise
+    </button>
 
     <p>Shoulder</p>
-    <button> anti </button>
-    <button> clockwise </button>
+    <button
+      on:click={() => sendCommand("stepper_relative 0 -" + step + "  0 0")}
+    >
+      anti
+    </button>
+    <button
+      on:click={() => sendCommand("stepper_relative 0 " + step + "  0 0")}
+    >
+      clockwise
+    </button>
 
     <p>Elbow</p>
-    <button> anti </button>
-    <button> clockwise </button>
+    <button
+      on:click={() => sendCommand("stepper_relative 0 0 -" + step + "  0")}
+    >
+      anti
+    </button>
+    <button
+      on:click={() => sendCommand("stepper_relative 0 0 " + step + "  0")}
+    >
+      clockwise
+    </button>
 
     <p>Wrist</p>
-    <button> anti </button>
-    <button> clockwise </button>
+    <button on:click={() => sendCommand("stepper_relative 0 0 0 -" + step)}>
+      anti
+    </button>
+    <button on:click={() => sendCommand("stepper_relative 0 0 0 " + step)}>
+      clockwise
+    </button>
   </div>
 
   <h1>Axes</h1>
   <div class="circle-cont">
     <div class="group-title">Z Axis</div>
-    <button>↑</button>
-    <button>↑↑</button>
-    <button>↑↑↑</button>
+    <button on:click={() => sendCommand("axis_relative " + step * 1 + " 0 0")}
+      >↑</button
+    >
+    <button on:click={() => sendCommand("axis_relative " + step * 2 + " 0 0")}
+      >↑↑</button
+    >
+    <button on:click={() => sendCommand("axis_relative " + step * 5 + " 0 0")}
+      >↑↑↑</button
+    >
 
-    <button>↓</button>
-    <button>↓↓</button>
-    <button>↓↓↓</button>
+    <button on:click={() => sendCommand("axis_relative " + step * -1 + " 0 0")}
+      >↓</button
+    >
+    <button on:click={() => sendCommand("axis_relative " + step * -2 + " 0 0")}
+      >↓↓</button
+    >
+    <button on:click={() => sendCommand("axis_relative " + step * -5 + " 0 0")}
+      >↓↓↓</button
+    >
 
     <div class="group-title">X Axis</div>
-    <button>→</button>
-    <button>→→</button>
-    <button>→→→</button>
+    <button on:click={() => sendCommand("axis_relative 0 " + step * 1 + " 0")}
+      >→</button
+    >
+    <button on:click={() => sendCommand("axis_relative 0 " + step * 2 + " 0")}
+      >→→</button
+    >
+    <button on:click={() => sendCommand("axis_relative 0 " + step * 5 + " 0")}
+      >→→→</button
+    >
 
-    <button>←</button>
-    <button>←←</button>
-    <button>←←←</button>
+    <button on:click={() => sendCommand("axis_relative 0 " + step * -1 + " 0")}
+      >←</button
+    >
+    <button on:click={() => sendCommand("axis_relative 0 " + step * -2 + " 0")}
+      >←←</button
+    >
+    <button on:click={() => sendCommand("axis_relative 0 " + step * -5 + " 0")}
+      >←←←</button
+    >
 
     <div class="group-title">Y Axis</div>
-    <button>→</button>
-    <button>→→</button>
-    <button>→→→</button>
+    <button on:click={() => sendCommand("axis_relative 0 0 " + step * 1)}
+      >→</button
+    >
+    <button on:click={() => sendCommand("axis_relative 0 0 " + step * 2)}
+      >→→</button
+    >
+    <button on:click={() => sendCommand("axis_relative 0 0 " + step * 5)}
+      >→→→</button
+    >
 
-    <button>←</button>
-    <button>←←</button>
-    <button>←←←</button>
+    <button on:click={() => sendCommand("axis_relative 0 0 " + step * -1)}
+      >←</button
+    >
+    <button on:click={() => sendCommand("axis_relative 0 0 " + step * -2)}
+      >←←</button
+    >
+    <button on:click={() => sendCommand("axis_relative 0 0 " + step * -5)}
+      >←←←</button
+    >
   </div>
 
   <h1>EHCODE</h1>
@@ -77,7 +141,7 @@
       placeholder="Your wish is my command"
       bind:value={text}
     />
-    <button class="send" on:click={sendCommand}>Send</button>
+    <button class="send" on:click={() => sendCommand(text)}>Send</button>
   </div>
 </main>
 
