@@ -1,23 +1,20 @@
 <script>
   let text = `s 100 100 100 100`;
+  const step = 100;
 
-  function sendCommand() {
-    console.log(text);
+  async function sendCommand(command) {
+    command = command ?? text;
 
-    fetch("http://192.168.86.22/post", {
+    console.log(command);
+
+    const res = await fetch("http://192.168.86.22/post", {
       method: "POST",
+      mode: "no-cors",
       headers: {
         "Content-Type": "text/plain",
       },
       body: text,
-    })
-      .then(function (response) {
-        console.log(response);
-        return response.json();
-      })
-      .then(function (data) {
-        console.log(data);
-      });
+    });
   }
 </script>
 
