@@ -31,6 +31,8 @@ int pulseWidth = 6.6;
 int microsecondsToDegrees;
 
 String sdata="";  // Initialised to nothing
+String commandType;
+int commandData[10] = {};
 
 AccelStepper shoulderStepper(1, SHOULDER_STEP_PIN, SHOULDER_DIR_PIN);
 AccelStepper reverseShoulderStepper(1, REVERSE_SHOULDER_STEP_PIN, REVERSE_SHOULDER_DIR_PIN);
@@ -173,16 +175,42 @@ void loop()
     if (ch=='\r') {  // command recieved
       sdata.trim();
 
-      Serial.print("X Z Y endAngle - ");
       Serial.println(sdata);
 
       if(sdata == "home"){
         home();
       }
       else{
+        commandType = getValue(sdata, ' ', 0);
+        Serial.print(commandType);
+        Serial.print(" ");
+        for(int i = 1; i < 9; i++){
+          commandData[i-1] = getValue(sdata, ' ', i).toInt();
+          
+          Serial.print(commandData[i-1]);
+          Serial.print(" ");
+        }
+        Serial.println();
+
+        if(commandType == "s"){ //s base shoulder elbow wrist (+ or - for forward and reverse)
+          Serial.println("STEP CONTROL");
+          moveSteppers(commandData[0], commandData[1], commandData[2], commandData[3]);
+        }
+        else if(commandType == "a"){ //a base shoulder elbow wrist
+          Serial.println("ANGLE CONTROL");
+          angleSet(commandData[0], commandData[1], commandData[2], commandData[3]);
+        }
+        else if(commandType == "g"){ //g x y endAngle
+          Serial.println("G-CODE CONTROL");
+          set_arm(commandData[0],commandData[1],commandData[2]);
+        }
+
+
+
+        
   
-        int commands[] = {getValue(sdata, ';', 0).toInt(),getValue(sdata, ';', 1).toInt(),getValue(sdata, ';', 2).toInt(),getValue(sdata, ';', 3).toInt()}; //x,z,y,endAngle (need to add forarm angle)  
-        set_arm(commands[1],commands[2],commands[3]); //z,y,endAngle
+        //int commands[] = {getValue(sdata, ';', 0).toInt(),getValue(sdata, ';', 1).toInt(),getValue(sdata, ';', 2).toInt(),getValue(sdata, ';', 3).toInt()}; //x,z,y,endAngle (need to add forarm angle)  
+        //set_arm(commands[1],commands[2],commands[3]); //z,y,endAngle
       }
       
       sdata = ""; // clr string
@@ -190,10 +218,9 @@ void loop()
   }
 
   //jack
-  angleSet(0, 75, 0, 0);
-  angleSet(0, 55, 0, 0);
+  //angleSet(0, 75, 0, 0);
+  //angleSet(0, 55, 0, 0);
 
-  
   //set_arm(10,40,90);
   //set_arm(18,40,90);
   //line(0,40,90,0,30,90);
